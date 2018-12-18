@@ -1,0 +1,192 @@
+body{
+    background-color: green;
+    font-family: 'Gloria Hallelujah', cursive;
+    font-size: larger;
+}
+
+
+
+
+.logo{
+   width: 40%;
+    height: auto;
+    display: flex;
+    margin: 0 auto;
+}
+.logoPetit{
+    width: 15%;
+    height: auto;
+
+
+}
+
+
+
+.btn {
+    background-color:#c74545;
+    -moz-border-radius:28px;
+    -webkit-border-radius:28px;
+    border-radius:28px;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-size:12px;
+    padding:3px 65px;
+    text-decoration:none;
+
+}
+.btn:hover {
+    background-color:white;
+    color: #bd2a2a;
+    text-decoration:underline;
+
+}
+
+.btnJ {
+    background-color:#c74545;
+    -moz-border-radius:28px;
+    -webkit-border-radius:28px;
+    border-radius:28px;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-size:12px;
+    padding:3px 30px;
+    text-decoration:none;
+
+}
+
+
+
+
+.btnJ:hover {
+    background-color:white;
+    color: #bd2a2a;
+    text-decoration:underline;
+
+}
+
+
+
+
+.menuDepart{
+    display: flex;
+    flex-wrap: wrap;
+    width: 25px;
+    margin-left: 44%;
+    margin-top: 20px;
+
+}
+
+input{
+    border-radius: 10px;
+    margin: unset;
+
+}
+input:focus{
+    outline: none;
+    background-color: #bd2a2a;
+    color: white;
+}
+
+
+/*code page heu.html si dessous*/
+
+#banque{
+
+    width: 20%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    margin-top: 100px;
+    margin-bottom: 40px;
+
+}
+#decoBanque{
+    z-index: -100;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: fixed;
+    top: 0px;
+    margin-left: 40%;
+}
+
+.croupier{
+    width: 75%;
+    height: 65%;
+}
+
+.com{
+    position: absolute;
+    margin-top: 30px;
+}
+
+
+.comText{
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 7px;
+    padding: 3px 10px 3px 10px;
+    content: "";
+}
+.comText::after{
+    content: "";
+}
+
+#banque>.carteB{
+    display: flex;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+#joueur{
+
+    width: 30%;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap:30px;
+    margin: 0 auto;
+
+}
+
+#joueur>#carteJ{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+
+
+
+#token{
+     margin-top: 25px;
+     margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+ }
+.token{
+    height: 55px;
+    width: 55px;
+}
+
+
+
+.carteJ{
+    height: 100px;
+    width: 75px;
+    margin: 10px;
+
+}
+
+.carteB{
+    height: 100px;
+    width: 75px;
+    margin: 0 auto;
+}
+.carteDeco{
+    height: 100px;
+    width: 75px;
+    margin-top: 150px;
+    transform: rotate(45deg);
+}
+

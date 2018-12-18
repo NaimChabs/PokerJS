@@ -1,0 +1,49 @@
+
+body{
+
+
+    background-image: url("image/amanda-c-1132282-unsplash.jpg");
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    background-repeat: no-repeat;
+}
+
+.corp2{
+
+    width: 80%;
+    margin: 0 auto;
+    padding: 0px 20px 0px 20px;
+    background-color: dimgrey;
+}
+.logoPetit {
+    width: 20%;
+    height: auto;
+    display: flex;
+    margin: 0 auto;
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+
+
+
+h1{
+    text-align: center;
+    text-decoration: underline;
+
+}
+h2{
+    text-align: center;
+    text-decoration: underline;
+}
+h3{
+    text-align: center;
+
+}
+h4{
+    text-align: center;
+}
+
+p{
+    text-align: center;
+}

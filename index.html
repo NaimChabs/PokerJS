@@ -1,11 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Poker F-J-N</title>
-    <script src="game.js"></script>
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
 </head>
-<body>
 
+<body>
+<img class="logo" src="image/logo.png"/>
+
+<div class="menuDepart">
+    <label class="pseudo" for="Pseudo">Pseudo</label>
+    <input class="pseudo" type="text" id="Pseudo" name="pseudo">
+
+    <label class="budget" for="Budget">Budget</label>
+    <input class="budget" type="number" id="budget" name="budget">
+
+    <br>
+    <input class="btn" type="button" value="JOUER" onClick="window.location = 'jeu.html'">
+    <br>
+    <input class="btn" type="button" value="REGLE" onClick="window.location = 'regle.html'">
+</div>
 </body>
 </html>
