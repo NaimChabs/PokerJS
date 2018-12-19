@@ -1,15 +1,19 @@
 
 let couleur = ['C', 'D', 'H', 'S'];
 let valeur = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'K', 'Q'];
-let a = 2;
+let puissance = ['13', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+
+
+
 
 function rand(nb){
     return  Math.floor(Math.random() * nb);
 }
 class Carte {
-    constructor(couleur, valeur) {
+    constructor(couleur, valeur, puissance) {
         this.couleur = couleur;
         this.valeur = valeur;
+        this.puissance = puissance;
         this.nom = couleur + valeur;
         this.img = this.nom + '.jpg';
     }
@@ -25,11 +29,11 @@ let Deck = {
 
 
 
-    initDeck: function (couleur, valeur) {
+    initDeck: function (couleur, valeur, puissance) {
        for (let i of couleur) {
-            for(let e of valeur) {
+            for(let e in valeur) {
                // console.log(couleur[i] + '    ' + valeur[e]);
-                this.jeuDeck.push( new Carte(i, e) );}
+                this.jeuDeck.push( new Carte(i, valeur[e], puissance[e]) );}
             }
         },
 
@@ -51,7 +55,7 @@ let Deck = {
 
 
 // --- INIT DU JEU
-Deck.initDeck(couleur, valeur);
+Deck.initDeck(couleur, valeur, puissance);
 
 
 // Distribution des cartes
