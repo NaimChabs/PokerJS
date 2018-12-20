@@ -1,7 +1,7 @@
 
 let couleur = ['C', 'D', 'H', 'S'];
 let valeur = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'K', 'Q'];
-let puissance = ['13', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+let puissance = ['14', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '13','12'];
 
 
 // creation tableau avec puissance
@@ -21,7 +21,7 @@ class Carte {
         this.couleur = couleur;
         this.valeur = valeur;
         this.puissance = puissance;
-        this.nom = couleur + valeur;
+        this.nom = valeur + couleur;
         this.img = this.nom + '.jpg';
     }
 }
@@ -236,7 +236,7 @@ function sameCard(main){
     //if (idem.filter(e => e === 2).length === 2) {
         if (pair > 1){          //________________________________DoublePair
        // return main.doublePair = true;
-        return main.result = [8, pairP];
+        return main.result = [15, pairP];
     }
 
 
@@ -353,3 +353,18 @@ function jjeu() {
     console.log(localStorage.getItem("pseudo"));
     console.log(localStorage.getItem("budget"));
 }
+
+
+document.getElementById("jeuJ21").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[0].img + '" width="100%" height="100%" >';
+document.getElementById("jeuJ22").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[1].img + '" width="100%" height="100%">';
+document.getElementById("jeuJ23").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[2].img + '" width="100%" height="100%">';
+document.getElementById("jeuJ24").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[3].img + '" width="100%" height="100%">';
+document.getElementById("jeuJ25").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[4].img + '" width="100%" height="100%">';
+
+document.getElementById("jeuJ11").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[0].img + '" width="100%" height="100%" >';
+document.getElementById("jeuJ12").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[1].img + '" width="100%" height="100%">';
+document.getElementById("jeuJ13").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[2].img + '" width="100%" height="100%">';
+document.getElementById("jeuJ14").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[3].img + '" width="100%" height="100%">';
+document.getElementById("jeuJ15").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[4].img + '" width="100%" height="100%">';
+
+console.log('test');

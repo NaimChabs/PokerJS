@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <title>pokerjeu</title>
     <link rel="stylesheet" href="../CSS/jeu.css">
-    <script src="../js/game.js"></script>
+
 </head>
 <body onload="jjeu()">
 
 <div class="global">
     <div class="table">
         <div class="joueur2">
-            <div class="carteTestJ2"></div>
-            <div class="carteTestJ2"></div>
-            <div class="carteTestJ2"></div>
-            <div class="carteTestJ2"></div>
-            <div class="carteTestJ2"></div>
+            <div class="carteTestJ2 1" id="jeuJ21"></div>
+            <div class="carteTestJ2 2" id="jeuJ22"></div>
+            <div class="carteTestJ2 3" id="jeuJ23"></div>
+            <div class="carteTestJ2 4" id="jeuJ24"></div>
+            <div class="carteTestJ2 5" id="jeuJ25"></div>
 
         </div>
         <br>
@@ -25,23 +25,23 @@
         <br>
         <div class="joueur1">
             <div class="carte1">
-                <div class="carteTestJ1"></div>
+                <div class="carteTestJ1"  id="jeuJ11"></div>
                 <p class="change">Changer Carte 1</p>
             </div>
             <div class="carte1">
-                <div class="carteTestJ1"></div>
+                <div class="carteTestJ1" id="jeuJ12"></div>
                 <p class="change">Changer Carte 2</p>
             </div>
             <div class="carte1">
-                <div class="carteTestJ1"></div>
+                <div class="carteTestJ1" id="jeuJ13"></div>
                 <p class="change">Changer Carte 3</p>
             </div>
             <div class="carte1">
-                <div class="carteTestJ1"></div>
+                <div class="carteTestJ1" id="jeuJ14"></div>
                 <p class="change">Changer Carte 4</p>
             </div>
             <div class="carte1">
-                <div class="carteTestJ1"></div>
+                <div class="carteTestJ1" id="jeuJ15"></div>
                 <p class="change">Changer Carte 5</p>
             </div>
 
@@ -72,5 +72,7 @@
         </div>
     </div>
 </div>
+
+<script src="../js/game.js"></script>
 </body>
 </html>
