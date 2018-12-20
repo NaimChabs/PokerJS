@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 let couleur = ['C', 'D', 'H', 'S'];
 let valeur = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'K', 'Q'];
@@ -248,6 +247,7 @@ function sameCard(main){
            // return main.pair = true;}
 
 
+        else { return main.result = [0,0]}
 
 
 }
@@ -256,15 +256,13 @@ console.log(Deck.jeuJ1);
 console.log(Deck.jeuJ2);
 
 
-<<<<<<< HEAD
+
      //eval('jeuJ1' + couleur[0]) = Deck.jeuJ1.filter(e => e.couleur === couleur[0]);
-=======
+
 function jindex() {
     // Créations des boutons en variable
     let play = document.getElementById('go');
     console.log("Initialisation");
->>>>>>> 4ebca8fed323365a50eecadf364de85332a25de7
-
     // Association boutons -> fonctions respective
     play.onclick = init;
 
@@ -354,15 +352,4 @@ function jjeu() {
     //TEST récup depuis page index
     console.log(localStorage.getItem("pseudo"));
     console.log(localStorage.getItem("budget"));
-}
-
-
-function changecarte() {
-    cptchange++;
-}
-=======
->>>>>>> johan
-
-function valider() {
-    distribution(nbrCartechange);
 }
