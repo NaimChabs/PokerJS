@@ -2,9 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>pokerjeu</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-$END$
+
+<div class="global">
+    <div class="table">
+        <div class="joueur2">
+            <div class="carteTestJ2"></div>
+            <div class="carteTestJ2"></div>
+            <div class="carteTestJ2"></div>
+            <div class="carteTestJ2"></div>
+            <div class="carteTestJ2"></div>
+
+        </div>
+        <br>
+        <div id="affpot">
+            <p>POT :</p>
+        </div>
+        <br>
+        <div class="joueur1">
+            <div class="carte1">
+                <div class="carteTestJ1"></div>
+                <p class="change">Changer Carte 1</p>
+            </div>
+            <div class="carte1">
+                <div class="carteTestJ1"></div>
+                <p class="change">Changer Carte 2</p>
+            </div>
+            <div class="carte1">
+                <div class="carteTestJ1"></div>
+                <p class="change">Changer Carte 3</p>
+            </div>
+            <div class="carte1">
+                <div class="carteTestJ1"></div>
+                <p class="change">Changer Carte 4</p>
+            </div>
+            <div class="carte1">
+                <div class="carteTestJ1"></div>
+                <p class="change">Changer Carte 5</p>
+            </div>
+
+        </div>
+    </div>
+
+    <hr class="separJ">
+    <div class="fondpupitre">
+        <div class="pupitre">
+            <div class="bouttonAction">
+                <div class="choix">
+
+                    <p class="mise">Mise</p>
+                    <p class="mise">Mise X 2</p>
+                    <p class="mise">Passer</p>
+                </div>
+            </div>
+            <hr class="separ">
+            <div>
+                <div id="stat">
+                    <p class="stat" id="nbrTourAffich">Nombre Tour :</p>
+                    <p class="stat" id="miseAffich">Mise :</p>
+                    <p class="stat" id="potAffich">Pot :</p>
+                    <p class="stat" id="budgetAffich">Budget :</p>
+                    <p class="stat" id="actionAffiche">Action :</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="game.js"></script>
+
 </body>
 </html>
