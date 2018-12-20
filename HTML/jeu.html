@@ -2,21 +2,19 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Poker F-J-N</title>
     <link rel="stylesheet" href="../CSS/style.css">
-
+    <script src="../js/game.js"></script>
 </head>
-<body>
 
+<body onload="jjeu()">
 <a href="index.html"><img class="logoPetit" src="../img/logo.png"/></a>
 
 <div id="decoBanque">
-
     <div class="com">
         <div class="comText">
                 perdu
         </div>
-
     </div>
     <img class="croupier" src="../img/live-dealer-blackjack.png" height="257" width="257"/>
     <img class="carteDeco" src="../img/Red_back.jpg"/>
@@ -24,38 +22,24 @@
 
 
 <div id="banque">
-
     <div class="carteB"><img src="../img/2c.gif"/></div>
     <div class="carteB"><img src="../img/2c.gif"/></div>
-
 </div>
 
-
 <div id="joueur">
-
     <div id="carteJ">
       <img class="carteJ" src="../img/2c.gif" height="96" width="71"/>
-
       <img class="carteJ" src="../img/2c.gif" height="96" width="71"/>
       <img class="carteJ" src="../img/2c.gif" height="96" width="71"/>
     </div>
 
     <div id="token">
-        <img class="token" src="../img/jeton5.png"/>
-        <img class="token" src="../img/jeton10.png"/>
-        <img class="token" src="../img/jeton20.png"/>
-        <img class="token" src="../img/jeton50.png"/>
-        <img class="token" src="../img/jeton100.png"/>
+        <img class="token" id="cinq" value="5" src="../img/jeton5.png"/>
+        <img class="token" id="10" src="../img/jeton10.png"/>
+        <img class="token" id="20" src="../img/jeton20.png"/>
+        <img class="token" id="50" src="../img/jeton50.png"/>
+        <img class="token" id="100" src="../img/jeton100.png"/>
     </div>
-
-    <div id="btnJ">
-        <div class="btnJ">
-
-        </div>
-    </div>
-
-
 </div>
-
 </body>
 </html>
