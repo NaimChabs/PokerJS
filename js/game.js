@@ -218,31 +218,37 @@ function sameCard(main){
     if (pair === 1 && brelan === 1){     //______________________________________ full
         //return main.brelanPair = true;
         main.result = [19,brelanP];
+        console.log('full');
         return main.result;
     }
 
 
     if (main.couleur === true ) {   // _________________________________________couleur
-    return main.result = [18, main[4].puissance];
+        console.log('couleur');
+        return main.result = [18, main[4].puissance];
     }
 
     if (main.suite === true ) {   // ______________________________________________Suite
+        console.log('suite');
         return main.suite = [17, main[4].puissance];
     }
 
     if (brelan === 1){          // ________________________________Brelan
+        console.log('brelan');
         return main.result = [16, brelanP];
     }
     //if (idem.filter(e => e === 2).length === 2) {
         if (pair > 1){          //________________________________DoublePair
        // return main.doublePair = true;
+            console.log('doublePair');
         return main.result = [15, pairP];
     }
 
 
 
         if (pair === 1){  //____________________________________Pair
-            main.result = [9, pairP];
+            main.result = [14, pairP];
+            console.log('pair');
             return main.result;}
            // return main.pair = true;}
 
@@ -254,7 +260,30 @@ function sameCard(main){
 
 console.log(Deck.jeuJ1);
 console.log(Deck.jeuJ2);
+let victoire = winner(Deck.jeuJ1, Deck.jeuJ2);
 
+function winner(main1, main2){
+    let gagnant;
+    if (main1.result[0] > main2.result[0]){
+        gagnant = 'joueur';
+    }
+    if (main1.result[0] < main2.result[0]){
+        gagnant = 'ordi';
+    }
+    if (main1.result[0] === main2.result[0]){
+
+        if (main1.result[1] > main2.result[1]){
+            gagnant = 'joueur';
+        }
+        if (main1.result[1] < main2.result[1]){
+            gagnant = 'ordi';
+        }
+        if (main1.result[1] < main2.result[1]){
+            gagnant = 'egal';
+        }
+    }
+    console.log(gagnant);
+}
 
 
      //eval('jeuJ1' + couleur[0]) = Deck.jeuJ1.filter(e => e.couleur === couleur[0]);
@@ -367,4 +396,3 @@ document.getElementById("jeuJ13").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[
 document.getElementById("jeuJ14").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[3].img + '" width="100%" height="100%">';
 document.getElementById("jeuJ15").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[4].img + '" width="100%" height="100%">';
 
-console.log('test');
