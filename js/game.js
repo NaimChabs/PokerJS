@@ -4,6 +4,12 @@ let valeur = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'K', 'Q'];
 let puissance = ['14', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '13','12'];
 
 
+
+
+document.querySelector("#distribuer").addEventListener('click',function(){
+    nouvellepartie();
+} );
+
 // creation tableau avec puissance
 let valeurP = [];
 for (let i = 0; i < valeur.length; i++){
@@ -51,8 +57,7 @@ let Deck = {
             let posLaCarte = jeuDeck.indexOf(laCarte);
             jeuDeck.splice(posLaCarte,1);
             jeuJ.push(laCarte);
-           // console.log(laCarte);
-
+            console.log("distrib");
 
         }
     },
@@ -116,8 +121,15 @@ Deck.initDeck(couleur, valeur, puissance);
 
 
 // Distribution des cartes
-Deck.distribution(Deck.jeuDeck, Deck.jeuJ1, 5);
-Deck.distribution(Deck.jeuDeck, Deck.jeuJ2, 5);
+// Deck.distribution(Deck.jeuDeck, Deck.jeuJ1, 5);
+// Deck.distribution(Deck.jeuDeck, Deck.jeuJ2, 5);
+function nouvellepartie(){
+    Deck.distribution(Deck.jeuDeck, Deck.jeuJ1, 5);
+    Deck.distribution(Deck.jeuDeck, Deck.jeuJ2, 5);
+    document.querySelector(".joueur1").style.visibility="visible";
+    document.querySelector(".joueur2").style.visibility="visible";
+    document.querySelector("#distribuer").style.visibility="hidden";
+
 //Deck.jeuJ2 = Objet.assign(Deck.jeuJ1);
 //___________POUR TESTER le jeu de l'ordi
 //Deck.jeuJ2 = [Deck.jeuDeck[1],Deck.jeuDeck[2],Deck.jeuDeck[3],Deck.jeuDeck[4],Deck.jeuDeck[5]];
@@ -259,7 +271,7 @@ function sameCard(main){
 
 }
 
-affOrdi();
+affOrdiback();
 affJoueur();
 
 console.log(Deck.jeuJ1);
@@ -310,7 +322,7 @@ function ordiPlay (jeu, main, victoire){
 
 }
 
-     //eval('jeuJ1' + couleur[0]) = Deck.jeuJ1.filter(e => e.couleur === couleur[0]);
+     //eval('jeuJ1' + couleur[0]) = Deck.jeuJ1.filter(e => e.couleur === couleur[0]);--------------------------------
 
 function jindex() {
     // Créations des boutons en variable
@@ -329,7 +341,40 @@ function jindex() {
     }
 }
 
-//Page jeu
+
+    function affOrdi() {
+
+
+    document.getElementById("jeuJ21").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[0].img + '" width="100%" height="100%" >';
+    document.getElementById("jeuJ22").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[1].img + '" width="100%" height="100%">';
+    document.getElementById("jeuJ23").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[2].img + '" width="100%" height="100%">';
+    document.getElementById("jeuJ24").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[3].img + '" width="100%" height="100%">';
+    document.getElementById("jeuJ25").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[4].img + '" width="100%" height="100%">';
+
+}
+function affOrdiback() {
+
+
+    document.getElementById("jeuJ21").innerHTML = '<img src="../JPEG/Red_back.jpg" width="100%" height="100%" >';
+    document.getElementById("jeuJ22").innerHTML = '<img src="../JPEG/Red_back.jpg" width="100%" height="100%">';
+    document.getElementById("jeuJ23").innerHTML = '<img src="../JPEG/Red_back.jpg" width="100%" height="100%">';
+    document.getElementById("jeuJ24").innerHTML = '<img src="../JPEG/Red_back.jpg" width="100%" height="100%">';
+    document.getElementById("jeuJ25").innerHTML = '<img src="../JPEG/Red_back.jpg " width="100%" height="100%">';
+
+}
+
+function affJoueur() {
+    document.getElementById("jeuJ11").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[0].img + '" width="100%" height="100%" >';
+    document.getElementById("jeuJ12").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[1].img + '" width="100%" height="100%">';
+    document.getElementById("jeuJ13").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[2].img + '" width="100%" height="100%">';
+    document.getElementById("jeuJ14").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[3].img + '" width="100%" height="100%">';
+    document.getElementById("jeuJ15").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[4].img + '" width="100%" height="100%">';
+
+}
+}
+
+
+//Page jeu------------------------------------------------------------------------------------------------------
 function jjeu() {
     // Init. des variables globales
     localStorage.setItem('mise', 20);
@@ -405,24 +450,4 @@ function jjeu() {
     //TEST récup depuis page index
     console.log(localStorage.getItem("pseudo"));
     console.log(localStorage.getItem("budget"));
-}
-
-function affOrdi() {
-
-
-    document.getElementById("jeuJ21").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[0].img + '" width="100%" height="100%" >';
-    document.getElementById("jeuJ22").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[1].img + '" width="100%" height="100%">';
-    document.getElementById("jeuJ23").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[2].img + '" width="100%" height="100%">';
-    document.getElementById("jeuJ24").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[3].img + '" width="100%" height="100%">';
-    document.getElementById("jeuJ25").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[4].img + '" width="100%" height="100%">';
-
-}
-
-function affJoueur() {
-    document.getElementById("jeuJ11").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[0].img + '" width="100%" height="100%" >';
-    document.getElementById("jeuJ12").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[1].img + '" width="100%" height="100%">';
-    document.getElementById("jeuJ13").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[2].img + '" width="100%" height="100%">';
-    document.getElementById("jeuJ14").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[3].img + '" width="100%" height="100%">';
-    document.getElementById("jeuJ15").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[4].img + '" width="100%" height="100%">';
-
 }
