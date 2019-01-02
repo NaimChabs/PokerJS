@@ -117,9 +117,10 @@ Deck.initDeck(couleur, valeur, puissance);
 
 // Distribution des cartes
 Deck.distribution(Deck.jeuDeck, Deck.jeuJ1, 5);
-//Deck.distribution(Deck.jeuDeck, Deck.jeuJ2, 5);
-
-Deck.jeuJ2 = [Deck.jeuDeck[1],Deck.jeuDeck[2],Deck.jeuDeck[3],Deck.jeuDeck[4],Deck.jeuDeck[5]];
+Deck.distribution(Deck.jeuDeck, Deck.jeuJ2, 5);
+//Deck.jeuJ2 = Objet.assign(Deck.jeuJ1);
+//___________POUR TESTER le jeu de l'ordi
+//Deck.jeuJ2 = [Deck.jeuDeck[1],Deck.jeuDeck[2],Deck.jeuDeck[3],Deck.jeuDeck[4],Deck.jeuDeck[5]];
 
 
 
@@ -182,7 +183,7 @@ function sameCard(main){
     let pair = 0;
 
     if (main.suite === true && main.couleur === true) {  // ________________flush
-         return main.result = [21, main[4].puissance];
+         return main.result = [21, parseInt(main[4].puissance)];
     }
 
 
@@ -217,7 +218,7 @@ function sameCard(main){
 
     if (pair === 1 && brelan === 1){     //______________________________________ full
         //return main.brelanPair = true;
-        main.result = [19,brelanP];
+        main.result = [19,parseInt(brelanP)];
         console.log('full');
         return main.result;
     }
@@ -225,29 +226,29 @@ function sameCard(main){
 
     if (main.couleur === true ) {   // _________________________________________couleur
         console.log('couleur');
-        return main.result = [18, main[4].puissance];
+        return main.result = [18, parseInt([4].puissance)];
     }
 
     if (main.suite === true ) {   // ______________________________________________Suite
         console.log('suite');
-        return main.suite = [17, main[4].puissance];
+        return main.suite = [17, parseInt(main[4].puissance)];
     }
 
     if (brelan === 1){          // ________________________________Brelan
         console.log('brelan');
-        return main.result = [16, brelanP];
+        return main.result = [16, parseInt(brelanP)];
     }
     //if (idem.filter(e => e === 2).length === 2) {
         if (pair > 1){          //________________________________DoublePair
        // return main.doublePair = true;
             console.log('doublePair');
-        return main.result = [15, pairP];
+        return main.result = [15, parseInt(pairP)];
     }
 
 
 
         if (pair === 1){  //____________________________________Pair
-            main.result = [14, pairP];
+            main.result = [14, parseInt(pairP)];
             console.log('pair');
             return main.result;}
            // return main.pair = true;}
@@ -258,9 +259,14 @@ function sameCard(main){
 
 }
 
+affOrdi();
+affJoueur();
+
 console.log(Deck.jeuJ1);
 console.log(Deck.jeuJ2);
 let victoire = winner(Deck.jeuJ1, Deck.jeuJ2);
+
+console.log(victoire);
 
 function winner(main1, main2){
     let gagnant;
@@ -278,13 +284,31 @@ function winner(main1, main2){
         if (main1.result[1] < main2.result[1]){
             gagnant = 'ordi';
         }
-        if (main1.result[1] < main2.result[1]){
+        if (main1.result[1] === main2.result[1]){
             gagnant = 'egal';
         }
     }
-    console.log(gagnant);
+    return gagnant;
 }
 
+function ordiPlay (jeu, main, victoire){
+    let nb = 3;
+
+    if (victoire === 'ordi'){
+
+    }
+    if (victoire === 'joueur'){
+        console.log('jj');
+        main.splice(0,nb);
+        Deck.distribution(jeu, main, nb);
+
+
+        Deck.rangeMain2(main);
+        sameCard(main);
+        affOrdi();
+    }
+
+}
 
      //eval('jeuJ1' + couleur[0]) = Deck.jeuJ1.filter(e => e.couleur === couleur[0]);
 
@@ -383,16 +407,22 @@ function jjeu() {
     console.log(localStorage.getItem("budget"));
 }
 
+function affOrdi() {
 
-document.getElementById("jeuJ21").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[0].img + '" width="100%" height="100%" >';
-document.getElementById("jeuJ22").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[1].img + '" width="100%" height="100%">';
-document.getElementById("jeuJ23").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[2].img + '" width="100%" height="100%">';
-document.getElementById("jeuJ24").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[3].img + '" width="100%" height="100%">';
-document.getElementById("jeuJ25").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[4].img + '" width="100%" height="100%">';
 
-document.getElementById("jeuJ11").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[0].img + '" width="100%" height="100%" >';
-document.getElementById("jeuJ12").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[1].img + '" width="100%" height="100%">';
-document.getElementById("jeuJ13").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[2].img + '" width="100%" height="100%">';
-document.getElementById("jeuJ14").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[3].img + '" width="100%" height="100%">';
-document.getElementById("jeuJ15").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[4].img + '" width="100%" height="100%">';
+    document.getElementById("jeuJ21").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[0].img + '" width="100%" height="100%" >';
+    document.getElementById("jeuJ22").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[1].img + '" width="100%" height="100%">';
+    document.getElementById("jeuJ23").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[2].img + '" width="100%" height="100%">';
+    document.getElementById("jeuJ24").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[3].img + '" width="100%" height="100%">';
+    document.getElementById("jeuJ25").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[4].img + '" width="100%" height="100%">';
 
+}
+
+function affJoueur() {
+    document.getElementById("jeuJ11").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[0].img + '" width="100%" height="100%" >';
+    document.getElementById("jeuJ12").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[1].img + '" width="100%" height="100%">';
+    document.getElementById("jeuJ13").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[2].img + '" width="100%" height="100%">';
+    document.getElementById("jeuJ14").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[3].img + '" width="100%" height="100%">';
+    document.getElementById("jeuJ15").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[4].img + '" width="100%" height="100%">';
+
+}
