@@ -1,3 +1,15 @@
+//Création des boutons
+let btnmise = document.getElementById('miseinit');
+let btnmisedouble = document.getElementById('misedouble');
+let btnpasser = document.getElementById('passer');
+let change1 = document.getElementById('CJ1');
+let change2 = document.getElementById('CJ2');
+let change3 = document.getElementById('CJ3');
+let change4 = document.getElementById('CJ4');
+let change5 = document.getElementById('CJ5');
+
+
+
 
 let couleur = ['C', 'D', 'H', 'S'];
 let valeur = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'K', 'Q'];
@@ -57,6 +69,21 @@ let Deck = {
         }
     },
 
+    distributionUnit: function (jeuDeck, jeuJ, place) {
+
+            let laCarte = jeuDeck[rand(jeuDeck.length)];
+        console.log(laCarte);
+            let posLaCarte = jeuDeck.indexOf(laCarte);
+        console.log(posLaCarte);
+
+        jeuDeck.splice(posLaCarte,1);
+            jeuJ.splice(place, 1,laCarte);
+
+
+
+
+    },
+
     rangeMain: function (main) {
         let res = [];
         let mainIn = main;
@@ -76,36 +103,14 @@ let Deck = {
                 }
             }
         }
-        Deck.jeuJ1 = mainR;  // suite pb mise à jour hors de la fonction
+        //Deck.jeuJ1 = mainR;  // suite pb mise à jour hors de la fonction
+        return main = mainR;  // suite pb mise à jour hors de la fonction
 
 
 
     },
 
-    rangeMain2: function (main) {
-        let res = [];
-        let mainIn = main;
-        let mainR = [];
 
-        for (let e of main) {
-            res.push(parseInt(e.puissance));
-        }
-        res.sort((a, b) => a - b );
-
-
-        for(let e of res){
-            for(let i = 0; i < mainIn.length ; i++) {
-                if (parseInt(mainIn[i].puissance) === e){
-                    mainR.push(main[i]);
-                    mainIn.splice(i,1);
-                }
-            }
-        }
-        Deck.jeuJ2 = mainR;  // suite pb mise à jour hors de la fonction
-
-
-
-    }
 
     };  // fin de l'objet Deck
 
@@ -121,6 +126,9 @@ Deck.distribution(Deck.jeuDeck, Deck.jeuJ2, 5);
 //Deck.jeuJ2 = Objet.assign(Deck.jeuJ1);
 //___________POUR TESTER le jeu de l'ordi
 //Deck.jeuJ2 = [Deck.jeuDeck[1],Deck.jeuDeck[2],Deck.jeuDeck[3],Deck.jeuDeck[4],Deck.jeuDeck[5]];
+
+
+
 
 
 
@@ -157,8 +165,9 @@ function testCouleur(main) {
 }
 
 
-Deck.rangeMain(Deck.jeuJ1);
-Deck.rangeMain2(Deck.jeuJ2);
+Deck.jeuJ1 = Deck.rangeMain(Deck.jeuJ1);
+Deck.jeuJ2 = Deck.rangeMain(Deck.jeuJ2);
+//Deck.rangeMain2(Deck.jeuJ2);
 
 testsuite(Deck.jeuJ1);
 testsuite(Deck.jeuJ2);
@@ -268,6 +277,10 @@ let victoire = winner(Deck.jeuJ1, Deck.jeuJ2);
 
 console.log(victoire);
 
+
+
+
+
 function winner(main1, main2){
     let gagnant;
     if (main1.result[0] > main2.result[0]){
@@ -294,21 +307,35 @@ function winner(main1, main2){
 function ordiPlay (jeu, main, victoire){
     let nb = 3;
 
-    if (victoire === 'ordi'){
+    if (victoire === 'ordi'){  // on ne fait rien
+        return main;
 
     }
+
+   // if (victoire === 'egal' && ){
+
+
+   // }
     if (victoire === 'joueur'){
         console.log('jj');
         main.splice(0,nb);
+
         Deck.distribution(jeu, main, nb);
+        main = Deck.rangeMain(main);
+       sameCard(main);
+        console.log(main);
+        Deck.jeuJ2 = main; //a enelever aprsè le debug pour un return ...
+       //Deck.rangeMain2(main);
+       affOrdi();
 
 
-        Deck.rangeMain2(main);
-        sameCard(main);
-        affOrdi();
+
     }
 
+
+
 }
+
 
      //eval('jeuJ1' + couleur[0]) = Deck.jeuJ1.filter(e => e.couleur === couleur[0]);
 
@@ -329,24 +356,46 @@ function jindex() {
     }
 }
 
-//Page jeu
-function jjeu() {
-    // Init. des variables globales
+
+//function jjeu() {
+    // Init. des variables
     localStorage.setItem('mise', 20);
     localStorage.setItem('miseB', 20);
     localStorage.setItem('pot', '0');
     // let cptchange;
     // let nbrCartechange = cptchange;
 
-    //Création des boutons
-    let btnmise = document.getElementById('miseinit');
-    let btnmisedouble = document.getElementById('misedouble');
-    let btnpasser = document.getElementById('passer');
 
-    // Association boutons -> fonctions respective
-    btnmise.onclick = addmise;
-    btnmisedouble.onclick = misedouble;
-    btnpasser.onclick = passer;
+// Association boutons -> fonctions respective
+btnmise.onclick = addmise;
+btnmisedouble.onclick = misedouble;
+btnpasser.onclick = passer;
+change1.addEventListener("click", function() {
+    Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 0);
+    affJoueur();
+    change1.style.visibility = "hidden" ;});
+
+change2.addEventListener("click", function() {
+    Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 1);
+    affJoueur();
+    change2.style.visibility = "hidden" ;});
+
+change3.addEventListener("click", function() {
+    Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 2);
+    affJoueur();
+    change3.style.visibility = "hidden" ;});
+
+change4.addEventListener("click", function() {
+    Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 3);
+    affJoueur();
+    change4.style.visibility = "hidden" ;});
+
+change5.addEventListener("click", function() {
+    Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 4);
+    affJoueur();
+    change5.style.visibility = "hidden" ;});
+
+
 
     //Affichage
     function affichage() {
@@ -402,10 +451,18 @@ function jjeu() {
         affichage();
     }
 
-    //TEST récup depuis page index
+function changecard(nb) {
+    Deck.jeuJ1.splice(nb, 1);
+    Deck.distribution(Deck.jeuDeck, Deck.jeuJ1, 1);
+    affJoueur();
+    console.log("1");
+}
+
+//TEST récup depuis page index
     console.log(localStorage.getItem("pseudo"));
     console.log(localStorage.getItem("budget"));
-}
+//}
+
 
 function affOrdi() {
 
