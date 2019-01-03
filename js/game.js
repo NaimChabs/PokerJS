@@ -8,30 +8,41 @@ let change3 = document.getElementById('CJ3');
 let change4 = document.getElementById('CJ4');
 let change5 = document.getElementById('CJ5');
 let partie = document.querySelector('#distribuer');
+let val = document.getElementById("valid");
+let cartechange = [];
+let victoire;
 
+document.getElementById('miseinit').style.visibility = 'hidden'; //Cache les boutons
+document.getElementById('misedouble').style.visibility = 'hidden'; //Cache les boutons
+document.getElementById('passer').style.visibility = 'hidden'; //Cache les boutons
+document.getElementById("affpot").style.visibility = 'hidden'; //Stat pot
+document.getElementById("valid").style.visibility = 'hidden'; //Stat pot
 
 
 let couleur = ['C', 'D', 'H', 'S'];
 let valeur = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'K', 'Q'];
-let puissance = ['14', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '13','12'];
+let puissance = ['14', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '13', '12'];
 
 
-
-
-partie.addEventListener('click',function(){
+partie.addEventListener('click', function () {
     nouvellepartie();
-} );
+    localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB); // Pot = Mise joueur+Bot;
+    affichage();
+    // btnon();
+    btnvalider();
+    // partiecommence++;
+});
 
 // creation tableau avec puissance
 let valeurP = [];
-for (let i = 0; i < valeur.length; i++){
-    valeurP [i]= [valeur[i], puissance[i]];
+for (let i = 0; i < valeur.length; i++) {
+    valeurP [i] = [valeur[i], puissance[i]];
 
 }
 
 
-function rand(nb){
-    return  Math.floor(Math.random() * nb);
+function rand(nb) {
+    return Math.floor(Math.random() * nb);
 }
 
 class Carte {
@@ -45,31 +56,29 @@ class Carte {
 }
 
 
-
-
 let Deck = {
     jeuDeck: [],
     jeuJ1: [],
     jeuJ2: [],
 
 
-
     initDeck: function (couleur, valeur, puissance) {
-       for (let i of couleur) {
-            for(let e in valeur) {
-               // console.log(couleur[i] + '    ' + valeur[e]);
-                this.jeuDeck.push( new Carte(i, valeur[e], puissance[e]) );}
+        for (let i of couleur) {
+            for (let e in valeur) {
+                // console.log(couleur[i] + '    ' + valeur[e]);
+                this.jeuDeck.push(new Carte(i, valeur[e], puissance[e]));
             }
-        },
+        }
+    },
 
 
-   distribution: function (jeuDeck, jeuJ, nbCarteOut) {
-        for (let i = 0; i < nbCarteOut; i++){
+    distribution: function (jeuDeck, jeuJ, nbCarteOut) {
+        for (let i = 0; i < nbCarteOut; i++) {
             let laCarte = jeuDeck[rand(jeuDeck.length)];
             let posLaCarte = jeuDeck.indexOf(laCarte);
-            jeuDeck.splice(posLaCarte,1);
+            jeuDeck.splice(posLaCarte, 1);
             jeuJ.push(laCarte);
-           // console.log(laCarte);
+            // console.log(laCarte);
 
 
         }
@@ -77,15 +86,13 @@ let Deck = {
 
     distributionUnit: function (jeuDeck, jeuJ, place) {
 
-            let laCarte = jeuDeck[rand(jeuDeck.length)];
+        let laCarte = jeuDeck[rand(jeuDeck.length)];
         console.log(laCarte);
-            let posLaCarte = jeuDeck.indexOf(laCarte);
+        let posLaCarte = jeuDeck.indexOf(laCarte);
         console.log(posLaCarte);
 
-        jeuDeck.splice(posLaCarte,1);
-            jeuJ.splice(place, 1,laCarte);
-
-
+        jeuDeck.splice(posLaCarte, 1);
+        jeuJ.splice(place, 1, laCarte);
 
 
     },
@@ -98,68 +105,83 @@ let Deck = {
         for (let e of main) {
             res.push(parseInt(e.puissance));
         }
-        res.sort((a, b) => a - b );
+        res.sort((a, b) => a - b);
 
 
-        for(let e of res){
-            for(let i = 0; i < mainIn.length ; i++) {
-                if (parseInt(mainIn[i].puissance) === e){
+        for (let e of res) {
+            for (let i = 0; i < mainIn.length; i++) {
+                if (parseInt(mainIn[i].puissance) === e) {
                     mainR.push(main[i]);
-                    mainIn.splice(i,1);
+                    mainIn.splice(i, 1);
                 }
             }
         }
         return main = mainR;  // suite pb mise à jour hors de la fonction
 
 
-
     },
 
 
-
-    };  // fin de l'objet Deck
-
+};  // fin de l'objet Deck
 
 
 // --- INIT DU JEU
-Deck.initDeck(couleur, valeur, puissance);
+// Deck.initDeck(couleur, valeur, puissance);
 
 
 // Distribution des cartes
 // Deck.distribution(Deck.jeuDeck, Deck.jeuJ1, 5);
 // Deck.distribution(Deck.jeuDeck, Deck.jeuJ2, 5);
-function nouvellepartie(){
+function nouvellepartie() {
+    Deck.initDeck(couleur, valeur, puissance);
     Deck.distribution(Deck.jeuDeck, Deck.jeuJ1, 5);
     Deck.distribution(Deck.jeuDeck, Deck.jeuJ2, 5);
-    document.querySelector(".joueur1").style.visibility="visible";
-    document.querySelector(".joueur2").style.visibility="visible";
-    document.querySelector("#distribuer").style.visibility="hidden";
+    document.querySelector(".joueur1").style.visibility = "visible";
+    document.querySelector(".joueur2").style.visibility = "visible";
+    document.querySelector("#distribuer").style.visibility = "hidden";
 
 //Deck.jeuJ2 = Objet.assign(Deck.jeuJ1);
 //___________POUR TESTER le jeu de l'ordi
 //Deck.jeuJ2 = [Deck.jeuDeck[1],Deck.jeuDeck[2],Deck.jeuDeck[3],Deck.jeuDeck[4],Deck.jeuDeck[5]];
 
+    Deck.jeuJ1 = Deck.rangeMain(Deck.jeuJ1);
+    Deck.jeuJ2 = Deck.rangeMain(Deck.jeuJ2);
+//Deck.rangeMain2(Deck.jeuJ2);
+
+    testsuite(Deck.jeuJ1);
+    testsuite(Deck.jeuJ2);
 
 
+    testCouleur(Deck.jeuJ1);
+    testCouleur(Deck.jeuJ2);
 
 
+    sameCard(Deck.jeuJ1);
+    sameCard(Deck.jeuJ2);
 
+    affOrdiback();
+    affJoueur();
+
+    console.log(Deck.jeuJ1);
+    console.log(Deck.jeuJ2);
+    victoire = winner(Deck.jeuJ1, Deck.jeuJ2);
+
+    console.log(victoire);
+}
 
 function testsuite(main) {
 
     let suite = false;
     let i = 1;
 
-do {
-    if (parseInt(main[0].puissance) === parseInt(main[i].puissance) - i ) {
-        suite = true;
-    }
-    else {
-        suite = false;
-    }
-    i = i+1;
-} while (suite === true && i < 5);
-
+    do {
+        if (parseInt(main[0].puissance) === parseInt(main[i].puissance) - i) {
+            suite = true;
+        } else {
+            suite = false;
+        }
+        i = i + 1;
+    } while (suite === true && i < 5);
 
 
     main.suite = suite;
@@ -176,201 +198,150 @@ function testCouleur(main) {
     return main.couleur = false;
 }
 
-
-Deck.jeuJ1 = Deck.rangeMain(Deck.jeuJ1);
-Deck.jeuJ2 = Deck.rangeMain(Deck.jeuJ2);
-//Deck.rangeMain2(Deck.jeuJ2);
-
-testsuite(Deck.jeuJ1);
-testsuite(Deck.jeuJ2);
-
-
-testCouleur(Deck.jeuJ1);
-testCouleur(Deck.jeuJ2);
-
-
-
-sameCard(Deck.jeuJ1);
-sameCard(Deck.jeuJ2);
-
 //sameCard(Deck.jeuJ1);
 // sameCard(Deck.jeuJ2);
 
 
-function sameCard(main){
-    let idem =[];
+function sameCard(main) {
+    let idem = [];
     let brelan = 0;
     let brelanP = 0;
     let pair = 0;
 
     if (main.suite === true && main.couleur === true) {  // ________________flush
-         return main.result = [21, parseInt(main[4].puissance)];
+        return main.result = [21, parseInt(main[4].puissance)];
     }
 
 
-
-        for (let i = 0; i < valeur.length; i++){
-       //console.log(i);
+    for (let i = 0; i < valeur.length; i++) {
+        //console.log(i);
         //console.log(valeur[i]);
         idem[valeur[i]] = [main.filter(e => e.valeur === valeur[i]).length, puissance[i]];
-        if (idem[valeur[i]][0] === 4){
+        if (idem[valeur[i]][0] === 4) {
             // return main.carre = true;
-            return main.result = [20,puissance[i]]; // ______________________carré
+            return main.result = [20, puissance[i]]; // ______________________carré
         }
-        if (idem[valeur[i]][0] === 3){
+        if (idem[valeur[i]][0] === 3) {
             brelan = 1;
             brelanP = puissance[i];
         }
 
-        if (idem[valeur[i]][0] === 2){
+        if (idem[valeur[i]][0] === 2) {
             pair += 1;
-            if (pair === 1){pairP = puissance[i];}
-            if (pair > 1 && puissance[i] > pairP) { pairP = puissance[i];}
+            if (pair === 1) {
+                pairP = puissance[i];
+            }
+            if (pair > 1 && puissance[i] > pairP) {
+                pairP = puissance[i];
+            }
         }
 
     }
 
 
-
     console.log(idem);
-   // console.log(brelan);
+    // console.log(brelan);
     // console.log(pair);
     //return main.idem = idem;
 
-    if (pair === 1 && brelan === 1){     //______________________________________ full
+    if (pair === 1 && brelan === 1) {     //______________________________________ full
         //return main.brelanPair = true;
-        main.result = [19,parseInt(brelanP)];
+        main.result = [19, parseInt(brelanP)];
         console.log('full');
         return main.result;
     }
 
 
-    if (main.couleur === true ) {   // _________________________________________couleur
+    if (main.couleur === true) {   // _________________________________________couleur
         console.log('couleur');
         return main.result = [18, parseInt([4].puissance)];
     }
 
-    if (main.suite === true ) {   // ______________________________________________Suite
+    if (main.suite === true) {   // ______________________________________________Suite
         console.log('suite');
         return main.suite = [17, parseInt(main[4].puissance)];
     }
 
-    if (brelan === 1){          // ________________________________Brelan
+    if (brelan === 1) {          // ________________________________Brelan
         console.log('brelan');
         return main.result = [16, parseInt(brelanP)];
     }
     //if (idem.filter(e => e === 2).length === 2) {
-        if (pair > 1){          //________________________________DoublePair
-       // return main.doublePair = true;
-            console.log('doublePair');
+    if (pair > 1) {          //________________________________DoublePair
+        // return main.doublePair = true;
+        console.log('doublePair');
         return main.result = [15, parseInt(pairP)];
     }
 
 
+    if (pair === 1) {  //____________________________________Pair
+        main.result = [14, parseInt(pairP)];
+        console.log('pair');
+        return main.result;
+    }
+    // return main.pair = true;}
 
-        if (pair === 1){  //____________________________________Pair
-            main.result = [14, parseInt(pairP)];
-            console.log('pair');
-            return main.result;}
-           // return main.pair = true;}
 
-
-        else { return main.result = [0,0]}
+    else {
+        return main.result = [0, 0]
+    }
 
 
 }
 
-affOrdiback();
-affJoueur();
-
-console.log(Deck.jeuJ1);
-console.log(Deck.jeuJ2);
-let victoire = winner(Deck.jeuJ1, Deck.jeuJ2);
-
-console.log(victoire);
-
-
-
-
-
-function winner(main1, main2){
+function winner(main1, main2) {
     let gagnant;
-    if (main1.result[0] > main2.result[0]){
+    if (main1.result[0] > main2.result[0]) {
         gagnant = 'joueur';
     }
-    if (main1.result[0] < main2.result[0]){
+    if (main1.result[0] < main2.result[0]) {
         gagnant = 'ordi';
     }
-    if (main1.result[0] === main2.result[0]){
+    if (main1.result[0] === main2.result[0]) {
 
-        if (main1.result[1] > main2.result[1]){
+        if (main1.result[1] > main2.result[1]) {
             gagnant = 'joueur';
         }
-        if (main1.result[1] < main2.result[1]){
+        if (main1.result[1] < main2.result[1]) {
             gagnant = 'ordi';
         }
-        if (main1.result[1] === main2.result[1]){
+        if (main1.result[1] === main2.result[1]) {
             gagnant = 'egal';
         }
     }
     return gagnant;
 }
 
-function ordiPlay (jeu, main, victoire){
+function ordiPlay(jeu, main, victoire) {
     let nb = 3;
 
-    if (victoire === 'ordi'){  // on ne fait rien
+    if (victoire === 'ordi') {  // on ne fait rien
         return main;
-
     }
 
-   // if (victoire === 'egal' && ){
+    // if (victoire === 'egal' && ){
 
+    // }
 
-   // }
-    if (victoire === 'joueur'){
+    if (victoire === 'joueur') {
         console.log('jj');
-        main.splice(0,nb);
+        main.splice(0, nb);
 
         Deck.distribution(jeu, main, nb);
         main = Deck.rangeMain(main);
-       sameCard(main);
+        sameCard(main);
         console.log(main);
         Deck.jeuJ2 = main; //a enelever aprsè le debug pour un return ...
-       //Deck.rangeMain2(main);
-       affOrdi();
-
+        //Deck.rangeMain2(main);
+        affOrdi();
 
 
     }
 
 
-
 }
 
-
-
-
-function jindex() {
-    // Créations des boutons en variable
-    let play = document.getElementById('go');
-    console.log("Initialisation");
-    // Association boutons -> fonctions respective
-    play.onclick = init;
-
-    //Fonctions
-    function init() {
-        names = document.getElementById('Pseudo').value;
-        money = document.getElementById('Budget').value;
-        localStorage.setItem("pseudo", names);
-        localStorage.setItem("budget", money);
-        window.location = 'pokerjeu.html';
-    }
-}
-
-
-    function affOrdi() {
-
+function affOrdi() {
 
     document.getElementById("jeuJ21").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[0].img + '" width="100%" height="100%" >';
     document.getElementById("jeuJ22").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[1].img + '" width="100%" height="100%">';
@@ -379,6 +350,7 @@ function jindex() {
     document.getElementById("jeuJ25").innerHTML = '<img src="../JPEG/' + Deck.jeuJ2[4].img + '" width="100%" height="100%">';
 
 }
+
 function affOrdiback() {
 
 
@@ -398,115 +370,161 @@ function affJoueur() {
     document.getElementById("jeuJ15").innerHTML = '<img src="../JPEG/' + Deck.jeuJ1[4].img + '" width="100%" height="100%">';
 
 }
-}
 
 
 //Page jeu------------------------------------------------------------------------------------------------------
-    // Init. des variables globales
+// Init. des variables globales
 //function jjeu() {
-    // Init. des variables
-    localStorage.setItem('mise', 20);
-    localStorage.setItem('miseB', 20);
-    localStorage.setItem('pot', '0');
-    // let cptchange;
-    // let nbrCartechange = cptchange;
+// Init. des variables
+localStorage.setItem('mise', 20);
+localStorage.setItem('miseB', 20);
+localStorage.setItem('pot', '0');
+// let cptchange;
+// let nbrCartechange = cptchange;
 
 
 // Association boutons -> fonctions respective
 btnmise.onclick = addmise;
 btnmisedouble.onclick = misedouble;
 btnpasser.onclick = passer;
-change1.addEventListener("click", function() {
-    Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 0);
-    affJoueur();
-    change1.style.visibility = "hidden" ;});
+change1.addEventListener("click", function () {
+    // Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 0);
+    // affJoueur();
+    cartechange.push(0);
+    change1.style.visibility = "hidden";
+});
 
-change2.addEventListener("click", function() {
-    Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 1);
-    affJoueur();
-    change2.style.visibility = "hidden" ;});
+change2.addEventListener("click", function () {
+    // Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 1);
+    // affJoueur();
+    cartechange.push(1);
+    change2.style.visibility = "hidden";
+});
 
-change3.addEventListener("click", function() {
-    Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 2);
-    affJoueur();
-    change3.style.visibility = "hidden" ;});
+change3.addEventListener("click", function () {
+    // Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 2);
+    // affJoueur();
+    cartechange.push(2);
+    change3.style.visibility = "hidden";
+});
 
-change4.addEventListener("click", function() {
-    Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 3);
-    affJoueur();
-    change4.style.visibility = "hidden" ;});
+change4.addEventListener("click", function () {
+    // Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 3);
+    // affJoueur();
+    cartechange.push(3);
+    change4.style.visibility = "hidden";
+});
 
-change5.addEventListener("click", function() {
-    Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 4);
-    affJoueur();
-    change5.style.visibility = "hidden" ;});
-
-
-
-    //Affichage
-    function affichage() {
-        document.getElementById("miseAffich").innerHTML = 'Mise : ' + localStorage.mise + '€'; //Stat mise
-        document.getElementById("potAffich").innerHTML = 'Pot : ' + localStorage.pot + '€'; //Stat pot
-        document.getElementById("affpot").innerHTML = 'Pot : ' + localStorage.pot + '€'; //Stat pot
-        document.getElementById("budgetAffich").innerHTML = 'Budget : ' + localStorage.budget + '€'; //Stat budget
-        console.log("ok");
-    }
-
-    // Fonctions
-    // Mise 20
-    function addmise() {
-        localStorage.budget = parseInt(localStorage.budget) - parseInt(localStorage.mise); // Budget -= mise du joueur
-        localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB); // Pot = Mise joueur+Bot
-        console.log('mise ' + localStorage.mise);// Test ordre d'appel
-        console.log('Budget ' + localStorage.budget); // Test ordre d'appel
-        console.log('Pot ' + localStorage.pot); // Test ordre d'appel
-        console.log("pas ok"); // Test ordre d'appel
-        document.getElementById('miseinit').style.visibility = 'hidden'; //Cache les boutons
-        document.getElementById('misedouble').style.visibility = 'hidden'; //Cache les boutons
-        document.getElementById("actionAffich").innerHTML = 'Action : Mise 20€'; //action effectué
-
-        affichage(); // refresh l'affichage des stats
+change5.addEventListener("click", function () {
+    // Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 4);
+    // affJoueur();
+    cartechange.push(4);
+    change5.style.visibility = "hidden";
+});
 
 
-    }
+//Affichage
 
-    // Mise 40
-    function misedouble() {
-        localStorage.mise = 40; // On mise 40
-        localStorage.budget = parseInt(localStorage.budget) - parseInt(localStorage.mise); //Budget -= miseJ
-        localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB); //Pot = MiseJ+B
-        console.log('mise ' + localStorage.mise); //TEST
-        console.log('Budget ' + localStorage.budget); //TEST
-        console.log('Pot ' + localStorage.pot); //TEST
-        console.log("oui"); //TEST ordre
-        document.getElementById('miseinit').style.visibility = 'hidden'; //Cache
-        document.getElementById('misedouble').style.visibility = 'hidden'; //Cache
-        document.getElementById("actionAffich").innerHTML = 'Action : Mise 40€'; //action effectué
-        affichage(); //refresh stats display
-    }
+function affchange() {
+    change1.style.visibility = "hidden";
+    change2.style.visibility = "hidden";
+    change3.style.visibility = "hidden";
+    change4.style.visibility = "hidden";
+    change5.style.visibility = "hidden";
 
-    // Passer le tour
-    function passer() {
-        localStorage.mise = 0; //On joue pas
-        document.getElementById('miseinit').style.visibility = 'hidden'; //Cache les boutons
-        document.getElementById('misedouble').style.visibility = 'hidden'; //Cache les boutons
-        document.getElementById('passer').style.visibility = 'hidden'; //Cache les boutons
-        document.getElementById('actionAffich').innerHTML = 'Action : Couché'; //action effectué
-        console.log("perdu"); //Test
-        //END GAME ICI et reboot
-        affichage();
-    }
-
-function changecard(nb) {
-    Deck.jeuJ1.splice(nb, 1);
-    Deck.distribution(Deck.jeuDeck, Deck.jeuJ1, 1);
-    affJoueur();
-    console.log("1");
 }
 
+function affichage() {
+    document.getElementById("miseAffich").innerHTML = 'Mise : ' + localStorage.mise + '€'; //Stat mise
+    document.getElementById("potAffich").innerHTML = 'Pot : ' + localStorage.pot + '€'; //Stat pot
+    document.getElementById("affpot").style.visibility = 'visible'; //Stat pot
+    document.getElementById("affpot").innerHTML = 'Pot : ' + localStorage.pot + '€'; //Stat pot
+    document.getElementById("budgetAffich").innerHTML = 'Budget : ' + localStorage.budget + '€'; //Stat budget
+    console.log("AFFICHAGE OK");
+}
+
+// Fonctions
+function btnvalider() {
+    document.getElementById("valid").style.visibility = 'visible'; //Stat pot
+    val.onclick = btnon;
+}
+
+function btnon() {
+    for (let i = 0; i < cartechange.length; i++) {
+        Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, cartechange[i]);
+    }
+    affJoueur();
+    document.getElementById("valid").style.visibility = 'hidden'; //Stat pot
+    document.getElementById('miseinit').style.visibility = 'visible'; //aff les boutons
+    document.getElementById('misedouble').style.visibility = 'visible'; //aff les boutons
+    document.getElementById('passer').style.visibility = 'visible'; //Cache les boutons
+    affchange();
+}
+
+function btnoff() {
+    document.getElementById('miseinit').style.visibility = 'hidden'; //Cache les boutons
+    document.getElementById('misedouble').style.visibility = 'hidden'; //Cache les boutons
+    document.getElementById('passer').style.visibility = 'hidden'; //Cache les boutons
+
+    document.getElementById("actionAffich").innerHTML = 'Action : Mise 20€'; //action effectué
+}
+
+// Mise 20
+function addmise() {
+    // if (partiecommence !== 0) {
+    localStorage.budget = parseInt(localStorage.budget) - parseInt(localStorage.mise); // Budget -= mise du joueur
+    localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB); // Pot = Mise joueur+Bot
+    console.log('mise ' + localStorage.mise);// Test ordre d'appel
+    console.log('Budget ' + localStorage.budget); // Test ordre d'appel
+    console.log('Pot ' + localStorage.pot); // Test ordre d'appel
+    console.log("Mise de 20"); // Test ordre d'appel
+    btnoff();
+    ordiPlay(Deck.jeuDeck, Deck.jeuJ2, victoire);
+    console.log(victoire);
+    document.getElementById("actionAffich").innerHTML = 'Action : Mise 20€'; //action effectué
+
+    affichage(); // refresh l'affichage des stats
+    // }
+}
+
+// Mise 40
+function misedouble() {
+    // if (partiecommence !== 0) {
+    localStorage.mise = parseInt(localStorage.pot) + 20; // On mise 40
+    localStorage.budget = parseInt(localStorage.budget) - parseInt(localStorage.mise); //Budget -= miseJ
+    localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB); //Pot = MiseJ+B
+    console.log('mise ' + localStorage.mise); //TEST
+    console.log('Budget ' + localStorage.budget); //TEST
+    console.log('Pot ' + localStorage.pot); //TEST
+    btnoff();
+    document.getElementById("actionAffich").innerHTML = 'Action : Mise 40€'; //action effectué
+    affichage(); //refresh stats display
+    // }
+}
+
+// Passer le tour
+function passer() {
+    localStorage.mise = 0; //On joue pas
+    document.getElementById('miseinit').style.visibility = 'hidden'; //Cache les boutons
+    document.getElementById('misedouble').style.visibility = 'hidden'; //Cache les boutons
+    document.getElementById('passer').style.visibility = 'hidden'; //Cache les boutons
+    document.getElementById('actionAffich').innerHTML = 'Action : Couché'; //action effectué
+    console.log("perdu"); //Test
+    //END GAME ICI et reboot
+    affichage();
+}
+
+
+// function changecard(nb) {
+//     Deck.jeuJ1.splice(nb, 1);
+//     Deck.distribution(Deck.jeuDeck, Deck.jeuJ1, 1);
+//     affJoueur();
+//     console.log("1");
+// }
+
 //TEST récup depuis page index
-    console.log(localStorage.getItem("pseudo"));
-    console.log(localStorage.getItem("budget"));
+console.log(localStorage.getItem("pseudo"));
+console.log(localStorage.getItem("budget"));
 
 //}
 
