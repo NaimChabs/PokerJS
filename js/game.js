@@ -126,19 +126,14 @@ let Deck = {
 
 
 // --- INIT DU JEU
-// Deck.initDeck(couleur, valeur, puissance);
 
-
-// Distribution des cartes
-// Deck.distribution(Deck.jeuDeck, Deck.jeuJ1, 5);
-// Deck.distribution(Deck.jeuDeck, Deck.jeuJ2, 5);
 function nouvellepartie() {
     Deck.initDeck(couleur, valeur, puissance);
     Deck.distribution(Deck.jeuDeck, Deck.jeuJ1, 5);
     Deck.distribution(Deck.jeuDeck, Deck.jeuJ2, 5);
     document.querySelector(".joueur1").style.visibility = "visible";
     document.querySelector(".joueur2").style.visibility = "visible";
-    document.querySelector("#distribuer").style.visibility = "hidden";
+    partie.style.visibility = "hidden";
 
 //Deck.jeuJ2 = Objet.assign(Deck.jeuJ1);
 //___________POUR TESTER le jeu de l'ordi
@@ -146,27 +141,33 @@ function nouvellepartie() {
 
     Deck.jeuJ1 = Deck.rangeMain(Deck.jeuJ1);
     Deck.jeuJ2 = Deck.rangeMain(Deck.jeuJ2);
-//Deck.rangeMain2(Deck.jeuJ2);
-
-    testsuite(Deck.jeuJ1);
-    testsuite(Deck.jeuJ2);
 
 
-    testCouleur(Deck.jeuJ1);
-    testCouleur(Deck.jeuJ2);
 
-
-    sameCard(Deck.jeuJ1);
-    sameCard(Deck.jeuJ2);
-
+    eval();
     affOrdiback();
     affJoueur();
 
     console.log(Deck.jeuJ1);
     console.log(Deck.jeuJ2);
-    victoire = winner(Deck.jeuJ1, Deck.jeuJ2);
 
     console.log(victoire);
+}
+
+function eval(){
+    testsuite(Deck.jeuJ1);
+    testsuite(Deck.jeuJ2);
+
+    testCouleur(Deck.jeuJ1);
+    testCouleur(Deck.jeuJ2);
+
+    sameCard(Deck.jeuJ1);
+    sameCard(Deck.jeuJ2);
+
+    victoire = winner(Deck.jeuJ1, Deck.jeuJ2);
+    console.log(victoire);
+
+
 }
 
 function testsuite(main) {
@@ -197,9 +198,6 @@ function testCouleur(main) {
     }
     return main.couleur = false;
 }
-
-//sameCard(Deck.jeuJ1);
-// sameCard(Deck.jeuJ2);
 
 
 function sameCard(main) {
@@ -316,12 +314,17 @@ function ordiPlay(jeu, main, victoire) {
     let nb = 3;
 
     if (victoire === 'ordi') {  // on ne fait rien
+        affOrdi(); // a enlever à terme
+
         return main;
     }
 
-    // if (victoire === 'egal' && ){
+    if (victoire === 'egal' ){
+        affOrdi(); // a enlever à terme
 
-    // }
+
+
+    }
 
     if (victoire === 'joueur') {
         console.log('jj');
@@ -329,10 +332,11 @@ function ordiPlay(jeu, main, victoire) {
 
         Deck.distribution(jeu, main, nb);
         main = Deck.rangeMain(main);
-        sameCard(main);
+        //sameCard(main);
         console.log(main);
         Deck.jeuJ2 = main; //a enelever aprsè le debug pour un return ...
         //Deck.rangeMain2(main);
+        eval();
         affOrdi();
 
 
@@ -479,7 +483,9 @@ function addmise() {
     console.log('Pot ' + localStorage.pot); // Test ordre d'appel
     console.log("Mise de 20"); // Test ordre d'appel
     btnoff();
+    eval();
     ordiPlay(Deck.jeuDeck, Deck.jeuJ2, victoire);
+    eval();
     console.log(victoire);
     document.getElementById("actionAffich").innerHTML = 'Action : Mise 20€'; //action effectué
 
@@ -497,6 +503,9 @@ function misedouble() {
     console.log('Budget ' + localStorage.budget); //TEST
     console.log('Pot ' + localStorage.pot); //TEST
     btnoff();
+    eval();
+    ordiPlay(Deck.jeuDeck, Deck.jeuJ2, victoire);
+    eval();
     document.getElementById("actionAffich").innerHTML = 'Action : Mise 40€'; //action effectué
     affichage(); //refresh stats display
     // }
@@ -515,12 +524,6 @@ function passer() {
 }
 
 
-// function changecard(nb) {
-//     Deck.jeuJ1.splice(nb, 1);
-//     Deck.distribution(Deck.jeuDeck, Deck.jeuJ1, 1);
-//     affJoueur();
-//     console.log("1");
-// }
 
 //TEST récup depuis page index
 console.log(localStorage.getItem("pseudo"));
@@ -528,5 +531,31 @@ console.log(localStorage.getItem("budget"));
 
 //}
 
+function finPartie (){
+
+    if (victoire === 'joueur'){
+        localStorage.budget = parseInt(localStorage.budget) + parseInt(localStorage.pot);
+    }
+
+    if (victoire === 'egal'){
+        localStorage.budget = parseInt(localStorage.budget) + parseInt(localStorage.pot/2);
+        // voir pour mettre un budget à l'ordi
+
+    }
+
+    if (victoire === 'ordi'){
+        //voir pour mettre un budget à l'ordi
+    }
+
+
+    localStorage.pot = 0;
+    localStorage.mise = 0;
+
+    affichage ();
+    cartechange = [];
+    partie.style.visibility = "visible";
+
+
+}
 
 
