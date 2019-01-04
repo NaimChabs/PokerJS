@@ -8,10 +8,13 @@ body{
     font-size: larger;}
 
 .table{
+    height: 550px   ;
+    width: 1400px;
     background-image:url("../img/tablePoker.png");
-    background-repeat: no-repeat;
+    /*background-repeat: no-repeat;*/
     background-size: cover;
-    background-position: center;
+    background-position: center ;
+    margin: 0 auto;
 
 }
 
@@ -41,6 +44,7 @@ body{
 }
 
 #affpot{
+    margin-top: 50px;
     text-align: center;
 }
 .joueur1 {
@@ -71,6 +75,7 @@ body{
     list-style-type: none;
     display: flex;
     justify-content: space-around;
+
 }
 P.mise{
     padding:20px 40px;
@@ -100,6 +105,9 @@ P.mise{
 }
 
 .mise {
+    margin-top: 20px;
+    height: auto;
+    width: auto;
     background-color: #6a6a6a;
     display: flex;
     justify-content: center;
@@ -110,19 +118,26 @@ P.mise{
     border-radius: 28px;
     cursor: pointer;
     color: white;
-    font-size: 17px;
+    font-size: 12px;
     padding: 7px 20px;
     text-decoration: none;
-    width: 100px;
+    /*width: 100px;*/
+}
+#valid{
+
 }
 
 .mise:hover {
     background-color: #6a0006;
     color: white;
-
+    -moz-border-radius: 28px;
+    -webkit-border-radius: 28px;
+    border-radius: 28px;
 }
 .change{
-
+    margin: 60px 0 0 21px;
+     height: auto;
+    width: auto;
     background-color: #6a0006;
     display: flex;
     justify-content: center;
@@ -134,12 +149,16 @@ P.mise{
     border-radius: 28px;
     cursor: pointer;
     color: white;
-    font-size: 17px;
+    font-size: 12px;
     padding: 7px 20px;
     text-decoration: none;
     width: 100px;
 }
-.change:hover {
+/*.change:hover {*/
+    /*background-color: #383838;*/
+    /*color: white;*/
+
+.change:visited{
     background-color: #383838;
     color: white;
 }
@@ -150,17 +169,17 @@ P.mise{
     color: white;
 }
 #distribuer{
+
     background-color: #6a0006;
     display: flex;
-    justify-content: center;
-    text-align: center;
+    margin: auto;
 
     -moz-border-radius: 28px;
     -webkit-border-radius: 28px;
     border-radius: 28px;
     cursor: pointer;
     color: white;
-    font-size: 17px;
+    font-size: 12px;
     padding: 7px 20px;
     text-decoration: none;
     width: 100px;

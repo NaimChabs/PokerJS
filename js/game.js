@@ -558,4 +558,12 @@ function finPartie (){
 
 }
 
-
+//
+// let centre = document.getElementById("valid");
+// let messinit = centre.firstChild;
+//
+//
+// let mess = document.getElementById("miseinit");
+//
+//
+// centre.replaceChild(mess, messinit);
