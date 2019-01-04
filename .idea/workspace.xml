@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3ca29f2c-678e-4b8c-8518-e1b4da9eb0e0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/PokerJS" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSS/jeu.css" beforeDir="false" afterPath="$PROJECT_DIR$/CSS/jeu.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML/pokerjeu.html" beforeDir="false" afterPath="$PROJECT_DIR$/HTML/pokerjeu.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/game.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PokerJS" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -110,11 +106,6 @@
               <item name="pokerJS" type="b2602c69:ProjectViewProjectNode" />
               <item name="pokerJS" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="pokerJS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="pokerJS" type="462c0819:PsiDirectoryNode" />
-              <item name="HTML" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -170,12 +161,12 @@
       <workItem from="1546537988101" duration="257000" />
       <workItem from="1546538388591" duration="772000" />
       <workItem from="1546540580551" duration="197000" />
-      <workItem from="1546589580151" duration="9576000" />
+      <workItem from="1546589580151" duration="9854000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33486000" />
+    <option name="totallyTimeSpent" value="33764000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
