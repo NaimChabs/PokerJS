@@ -11,6 +11,11 @@ let partie = document.querySelector('#distribuer');
 let val = document.getElementById("valid");
 let cartechange = [];
 let victoire;
+let mess_result; // message de fin de tour
+localStorage.setItem('mise', 0);
+localStorage.setItem('miseB', 0);
+localStorage.setItem('pot', '0');
+let budgetInit = parseInt(localStorage.budget);
 
 document.getElementById('miseinit').style.visibility = 'hidden'; //Cache les boutons
 document.getElementById('misedouble').style.visibility = 'hidden'; //Cache les boutons
@@ -26,6 +31,8 @@ let puissance = ['14', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '13',
 
 partie.addEventListener('click', function () {
     nouvellepartie();
+    localStorage.mise = 20;
+    localStorage.miseB = 20;
     localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB); // Pot = Mise joueur+Bot;
     affichage();
     // btnon();
@@ -129,9 +136,15 @@ let Deck = {
 
 function nouvellepartie() {
     Deck.initDeck(couleur, valeur, puissance);
+
     Deck.distribution(Deck.jeuDeck, Deck.jeuJ1, 5);
     Deck.distribution(Deck.jeuDeck, Deck.jeuJ2, 5);
     document.querySelector(".joueur1").style.visibility = "visible";
+    change1.style.visibility = "visible";
+    change2.style.visibility = "visible";
+    change3.style.visibility = "visible";
+    change4.style.visibility = "visible";
+    change5.style.visibility = "visible";
     document.querySelector(".joueur2").style.visibility = "visible";
     partie.style.visibility = "hidden";
 
@@ -314,12 +327,16 @@ function ordiPlay(jeu, main, victoire) {
     let nb = 3;
 
     if (victoire === 'ordi') {  // on ne fait rien
+        localStorage.miseB = localStorage.mise; // l'ordi s'aligne sur la mise du joueur
+        localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB);
         affOrdi(); // a enlever à terme
 
-        return main;
+      //  return main;
     }
 
     if (victoire === 'egal' ){
+        localStorage.miseB = localStorage.mise; // l'ordi s'aligne sur la mise du joueur
+        localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB);
         affOrdi(); // a enlever à terme
 
 
@@ -337,11 +354,18 @@ function ordiPlay(jeu, main, victoire) {
         Deck.jeuJ2 = main; //a enelever aprsè le debug pour un return ...
         //Deck.rangeMain2(main);
         eval();
+        console.log(victoire);
+        // tour de mise de l'ordi
+        if (victoire === 'ordi'){
+            localStorage.miseB = localStorage.mise; // l'ordi s'aligne sur la mise du joueur
+            localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB);
+        }
+        else { }//il ne mise pas}
+
         affOrdi();
-
-
     }
 
+    setTimeout(finPartie, 2000);
 
 }
 
@@ -380,9 +404,7 @@ function affJoueur() {
 // Init. des variables globales
 //function jjeu() {
 // Init. des variables
-localStorage.setItem('mise', 20);
-localStorage.setItem('miseB', 20);
-localStorage.setItem('pot', '0');
+
 // let cptchange;
 // let nbrCartechange = cptchange;
 
@@ -476,6 +498,7 @@ function btnoff() {
 // Mise 20
 function addmise() {
     // if (partiecommence !== 0) {
+    localStorage.mise = parseInt(localStorage.mise) + 20;
     localStorage.budget = parseInt(localStorage.budget) - parseInt(localStorage.mise); // Budget -= mise du joueur
     localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB); // Pot = Mise joueur+Bot
     console.log('mise ' + localStorage.mise);// Test ordre d'appel
@@ -513,12 +536,13 @@ function misedouble() {
 
 // Passer le tour
 function passer() {
-    localStorage.mise = 0; //On joue pas
-    document.getElementById('miseinit').style.visibility = 'hidden'; //Cache les boutons
-    document.getElementById('misedouble').style.visibility = 'hidden'; //Cache les boutons
-    document.getElementById('passer').style.visibility = 'hidden'; //Cache les boutons
+    //localStorage.mise = 0; //On joue pas
     document.getElementById('actionAffich').innerHTML = 'Action : Couché'; //action effectué
     console.log("perdu"); //Test
+    btnoff();
+    eval();
+    ordiPlay(Deck.jeuDeck, Deck.jeuJ2, victoire);
+    eval();
     //END GAME ICI et reboot
     affichage();
 }
@@ -532,30 +556,66 @@ console.log(localStorage.getItem("budget"));
 //}
 
 function finPartie (){
-
+    console.log(localStorage.pot);
+    console.log(localStorage.budget);
     if (victoire === 'joueur'){
         localStorage.budget = parseInt(localStorage.budget) + parseInt(localStorage.pot);
+        mess_result = 'Bravo vous emporter le pot: ' + localStorage.pot + '!' ;
     }
 
     if (victoire === 'egal'){
-        localStorage.budget = parseInt(localStorage.budget) + parseInt(localStorage.pot/2);
+        localStorage.budget = parseInt(localStorage.budget) + parseInt(localStorage.mise);
         // voir pour mettre un budget à l'ordi
+        mess_result = "Egalité, vous récupérez votre mise";
+
 
     }
 
     if (victoire === 'ordi'){
         //voir pour mettre un budget à l'ordi
+        localStorage.budget = parseInt(localStorage.budget) - parseInt(localStorage.pot);
+        mess_result = 'Vous perdez! l\'Ordi remporte le pot: ' + localStorage.pot + '!' ;
+
     }
 
 
     localStorage.pot = 0;
-    localStorage.mise = 0;
+   // localStorage.mise = 0;
 
     affichage ();
-    cartechange = [];
-    partie.style.visibility = "visible";
 
+    // --------------------------init des variables
+        cartechange = [];
+        Deck.jeuDeck = [],
+        Deck.jeuJ1 = [],
+        Deck.jeuJ2 = [],
+
+        partie.style.visibility = "visible";
+
+    // -------------------------gestion de l'affiche de fin de manche
+    let centre = document.getElementById("affpot");
+    let messinit = centre.firstChild;
+
+
+        let mess = document.createElement("H1");
+        let mess_content = document.createTextNode(mess_result);
+        mess.append(mess_content);
+
+        centre.replaceChild(mess, messinit);
+
+    // -------------------------gestion de la fin de partie
+    if (parseInt(localStorage.budget) <= 0) {
+        alert('You lose');
+        window.location = 'index.html';
+    }
+    if (parseInt(localStorage.budget) >= budgetInit ){
+        alert('You win');
+        window.location = 'index.html';
+
+    }
 
 }
+
+
 
 
