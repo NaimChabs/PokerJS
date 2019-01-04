@@ -608,7 +608,7 @@ function finPartie (){
         alert('You lose');
         window.location = 'index.html';
     }
-    if (parseInt(localStorage.budget) >= budgetInit ){
+    if (parseInt(localStorage.budget) >= 2 * budgetInit ){
         alert('You win');
         window.location = 'index.html';
 

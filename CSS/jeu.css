@@ -9,9 +9,7 @@ body{
 
 .table{
     height: 550px   ;
-    width: 1400px;
     background-image:url("../img/tablePoker.png");
-    /*background-repeat: no-repeat;*/
     background-size: cover;
     background-position: center ;
     margin: 0 auto;
@@ -23,8 +21,7 @@ body{
     width: 80px;
     height: 120px;
     background-color: #1c1b18;
-
-    /*display: flex;*/
+    display: flex;
 }
 .carteTestJ1{
     width: 80px;
@@ -121,7 +118,6 @@ P.mise{
     font-size: 12px;
     padding: 7px 20px;
     text-decoration: none;
-    /*width: 100px;*/
 }
 #valid{
 
@@ -154,9 +150,7 @@ P.mise{
     text-decoration: none;
     width: 100px;
 }
-/*.change:hover {*/
-    /*background-color: #383838;*/
-    /*color: white;*/
+
 
 .change:visited{
     background-color: #383838;
