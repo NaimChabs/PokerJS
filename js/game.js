@@ -1,4 +1,4 @@
-//Création des boutons
+//---------------------------------------------------- Déclaration des varaibles
 let btnmise = document.getElementById('miseinit');
 let btnmisedouble = document.getElementById('misedouble');
 let btnpasser = document.getElementById('passer');
@@ -9,6 +9,7 @@ let change4 = document.getElementById('CJ4');
 let change5 = document.getElementById('CJ5');
 let partie = document.querySelector('#distribuer');
 let val = document.getElementById("valid");
+
 let cartechange = [];
 let victoire;
 let mess_result; // message de fin de tour
@@ -17,28 +18,9 @@ localStorage.setItem('miseB', 0);
 localStorage.setItem('pot', '0');
 let budgetInit = parseInt(localStorage.budget);
 
-document.getElementById('miseinit').style.visibility = 'hidden'; //Cache les boutons
-document.getElementById('misedouble').style.visibility = 'hidden'; //Cache les boutons
-document.getElementById('passer').style.visibility = 'hidden'; //Cache les boutons
-document.getElementById("affpot").style.visibility = 'hidden'; //Stat pot
-document.getElementById("valid").style.visibility = 'hidden'; //Stat pot
-
-
 let couleur = ['C', 'D', 'H', 'S'];
 let valeur = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'K', 'Q'];
 let puissance = ['14', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '13', '12'];
-
-
-partie.addEventListener('click', function () {
-    nouvellepartie();
-    localStorage.mise = 20;
-    localStorage.miseB = 20;
-    localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB); // Pot = Mise joueur+Bot;
-    affichage();
-    // btnon();
-    btnvalider();
-    // partiecommence++;
-});
 
 // creation tableau avec puissance
 let valeurP = [];
@@ -48,10 +30,34 @@ for (let i = 0; i < valeur.length; i++) {
 }
 
 
+document.getElementById('miseinit').style.visibility = 'hidden'; //Cache les boutons
+document.getElementById('misedouble').style.visibility = 'hidden'; //Cache les boutons
+document.getElementById('passer').style.visibility = 'hidden'; //Cache les boutons
+document.getElementById("affpot").style.visibility = 'hidden'; //Stat pot
+document.getElementById("valid").style.visibility = 'hidden'; //Stat pot
+
+
+
+
+// -------------------------------------------------- Lancement du tour on cick
+partie.addEventListener('click', function () {
+    nouvellepartie();
+    localStorage.mise = 20;
+    localStorage.budget = parseInt(localStorage.budget) - 20;
+    localStorage.miseB = 20;
+    localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB); // Pot = Mise joueur+Bot;
+    affichage();
+    btnvalider();
+});
+
+
+
+// ----------------------------------------------- rand pour tirage
 function rand(nb) {
     return Math.floor(Math.random() * nb);
 }
 
+//------------------------------------------------Class Carte
 class Carte {
     constructor(couleur, valeur, puissance) {
         this.couleur = couleur;
@@ -62,6 +68,7 @@ class Carte {
     }
 }
 
+//------------------------------------------------Class Deck (include main des joueurs)
 
 let Deck = {
     jeuDeck: [],
@@ -78,7 +85,7 @@ let Deck = {
         }
     },
 
-
+    // ----- distribution des mains de départ + pour ordi
     distribution: function (jeuDeck, jeuJ, nbCarteOut) {
         for (let i = 0; i < nbCarteOut; i++) {
             let laCarte = jeuDeck[rand(jeuDeck.length)];
@@ -91,6 +98,7 @@ let Deck = {
         }
     },
 
+    // ----- distribution une par une pour le joueur
     distributionUnit: function (jeuDeck, jeuJ, place) {
 
         let laCarte = jeuDeck[rand(jeuDeck.length)];
@@ -104,6 +112,7 @@ let Deck = {
 
     },
 
+    // ----- pour mettre les cartes dans l'ordre de puissance
     rangeMain: function (main) {
         let res = [];
         let mainIn = main;
@@ -123,7 +132,7 @@ let Deck = {
                 }
             }
         }
-        return main = mainR;  // suite pb mise à jour hors de la fonction
+        return main = mainR;
 
 
     },
@@ -132,7 +141,7 @@ let Deck = {
 };  // fin de l'objet Deck
 
 
-// --- INIT DU JEU
+// --- INIT DU JEU te du Deck
 
 function nouvellepartie() {
     Deck.initDeck(couleur, valeur, puissance);
@@ -148,9 +157,7 @@ function nouvellepartie() {
     document.querySelector(".joueur2").style.visibility = "visible";
     partie.style.visibility = "hidden";
 
-//Deck.jeuJ2 = Objet.assign(Deck.jeuJ1);
-//___________POUR TESTER le jeu de l'ordi
-//Deck.jeuJ2 = [Deck.jeuDeck[1],Deck.jeuDeck[2],Deck.jeuDeck[3],Deck.jeuDeck[4],Deck.jeuDeck[5]];
+
 
     Deck.jeuJ1 = Deck.rangeMain(Deck.jeuJ1);
     Deck.jeuJ2 = Deck.rangeMain(Deck.jeuJ2);
@@ -167,6 +174,7 @@ function nouvellepartie() {
     console.log(victoire);
 }
 
+// ------------  Evaluation de la valeur des mains
 function eval(){
     testsuite(Deck.jeuJ1);
     testsuite(Deck.jeuJ2);
@@ -183,6 +191,7 @@ function eval(){
 
 }
 
+// ------------  check suite
 function testsuite(main) {
 
     let suite = false;
@@ -202,6 +211,7 @@ function testsuite(main) {
 
 }
 
+// ------------  check couleur
 function testCouleur(main) {
     for (let i = 0; i < couleur.length; i++) {
         if (main.filter(e => e.couleur === couleur[i]).length === 5) {
@@ -213,6 +223,7 @@ function testCouleur(main) {
 }
 
 
+// ------------  check carre / full / pair...
 function sameCard(main) {
     let idem = [];
     let brelan = 0;
@@ -225,11 +236,9 @@ function sameCard(main) {
 
 
     for (let i = 0; i < valeur.length; i++) {
-        //console.log(i);
-        //console.log(valeur[i]);
+
         idem[valeur[i]] = [main.filter(e => e.valeur === valeur[i]).length, puissance[i]];
         if (idem[valeur[i]][0] === 4) {
-            // return main.carre = true;
             return main.result = [20, puissance[i]]; // ______________________carré
         }
         if (idem[valeur[i]][0] === 3) {
@@ -251,9 +260,7 @@ function sameCard(main) {
 
 
     console.log(idem);
-    // console.log(brelan);
-    // console.log(pair);
-    //return main.idem = idem;
+;
 
     if (pair === 1 && brelan === 1) {     //______________________________________ full
         //return main.brelanPair = true;
@@ -277,9 +284,8 @@ function sameCard(main) {
         console.log('brelan');
         return main.result = [16, parseInt(brelanP)];
     }
-    //if (idem.filter(e => e === 2).length === 2) {
+
     if (pair > 1) {          //________________________________DoublePair
-        // return main.doublePair = true;
         console.log('doublePair');
         return main.result = [15, parseInt(pairP)];
     }
@@ -290,7 +296,6 @@ function sameCard(main) {
         console.log('pair');
         return main.result;
     }
-    // return main.pair = true;}
 
 
     else {
@@ -300,6 +305,8 @@ function sameCard(main) {
 
 }
 
+
+// ---------------------------------------------- Identification de la main la plus forte
 function winner(main1, main2) {
     let gagnant;
     if (main1.result[0] > main2.result[0]) {
@@ -323,21 +330,20 @@ function winner(main1, main2) {
     return gagnant;
 }
 
+
+// ---------------------------------------------- Tour de l'ordi
 function ordiPlay(jeu, main, victoire) {
     let nb = 3;
 
     if (victoire === 'ordi') {  // on ne fait rien
         localStorage.miseB = localStorage.mise; // l'ordi s'aligne sur la mise du joueur
         localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB);
-        affOrdi(); // a enlever à terme
 
-      //  return main;
     }
 
     if (victoire === 'egal' ){
         localStorage.miseB = localStorage.mise; // l'ordi s'aligne sur la mise du joueur
         localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB);
-        affOrdi(); // a enlever à terme
 
 
 
@@ -349,25 +355,88 @@ function ordiPlay(jeu, main, victoire) {
 
         Deck.distribution(jeu, main, nb);
         main = Deck.rangeMain(main);
-        //sameCard(main);
         console.log(main);
-        Deck.jeuJ2 = main; //a enelever aprsè le debug pour un return ...
-        //Deck.rangeMain2(main);
+        Deck.jeuJ2 = main; //a enelever si on transforme la fonction avec un return
+
         eval();
         console.log(victoire);
+
         // tour de mise de l'ordi
         if (victoire === 'ordi'){
             localStorage.miseB = localStorage.mise; // l'ordi s'aligne sur la mise du joueur
             localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB);
         }
-        else { }//il ne mise pas}
 
-        affOrdi();
+
     }
 
+    affOrdi();
     setTimeout(finPartie, 2000);
 
 }
+
+// -------------------------------------------------- Gestion de la fin du tour + check fin de partie
+function finPartie (){
+    console.log(localStorage.pot);
+    console.log(localStorage.budget);
+    if (victoire === 'joueur'){
+        localStorage.budget = parseInt(localStorage.budget) + parseInt(localStorage.pot);
+        mess_result = 'Bravo vous emporter le pot: ' + localStorage.pot + '!' ;
+    }
+
+    if (victoire === 'egal'){
+        localStorage.budget = parseInt(localStorage.budget) + parseInt(localStorage.mise);
+        mess_result = "Egalité, vous récupérez votre mise";
+
+
+    }
+
+    if (victoire === 'ordi'){
+        localStorage.budget = parseInt(localStorage.budget) - parseInt(localStorage.mise);
+        mess_result = 'Vous perdez! l\'Ordi remporte le pot: ' + localStorage.pot + '!' ;
+
+    }
+
+
+    localStorage.pot = 0;
+
+    affichage ();
+
+    // --------------------------init des variables
+    cartechange = [];
+    Deck.jeuDeck = [],
+        Deck.jeuJ1 = [],
+        Deck.jeuJ2 = [],
+
+        partie.style.visibility = "visible";
+
+    // -------------------------gestion de l'affiche de fin de manche
+    let centre = document.getElementById("affpot");
+    let messinit = centre.firstChild;
+
+
+    let mess = document.createElement("H1");
+    let mess_content = document.createTextNode(mess_result);
+    mess.append(mess_content);
+
+    centre.replaceChild(mess, messinit);
+
+    // -------------------------gestion de la fin de partie
+    if (parseInt(localStorage.budget) <= 0) {
+        alert('You lose');
+       // window.location = 'index.html';
+    }
+    if (parseInt(localStorage.budget) >= (budgetInit * 2) ){
+        alert('You win');
+       // window.location = 'index.html';
+
+    }
+
+}
+
+
+
+
 
 function affOrdi() {
 
@@ -401,49 +470,36 @@ function affJoueur() {
 
 
 //Page jeu------------------------------------------------------------------------------------------------------
-// Init. des variables globales
-//function jjeu() {
-// Init. des variables
 
-// let cptchange;
-// let nbrCartechange = cptchange;
 
 
 // Association boutons -> fonctions respective
 btnmise.onclick = addmise;
 btnmisedouble.onclick = misedouble;
 btnpasser.onclick = passer;
+
+//-------------------------------------------------------Attribution des cartes à changer du joeur
 change1.addEventListener("click", function () {
-    // Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 0);
-    // affJoueur();
     cartechange.push(0);
     change1.style.visibility = "hidden";
 });
 
 change2.addEventListener("click", function () {
-    // Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 1);
-    // affJoueur();
     cartechange.push(1);
     change2.style.visibility = "hidden";
 });
 
 change3.addEventListener("click", function () {
-    // Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 2);
-    // affJoueur();
     cartechange.push(2);
     change3.style.visibility = "hidden";
 });
 
 change4.addEventListener("click", function () {
-    // Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 3);
-    // affJoueur();
     cartechange.push(3);
     change4.style.visibility = "hidden";
 });
 
 change5.addEventListener("click", function () {
-    // Deck.distributionUnit(Deck.jeuDeck, Deck.jeuJ1, 4);
-    // affJoueur();
     cartechange.push(4);
     change5.style.visibility = "hidden";
 });
@@ -497,9 +553,8 @@ function btnoff() {
 
 // Mise 20
 function addmise() {
-    // if (partiecommence !== 0) {
-    localStorage.mise = parseInt(localStorage.mise) + 20;
-    localStorage.budget = parseInt(localStorage.budget) - parseInt(localStorage.mise); // Budget -= mise du joueur
+    localStorage.mise = parseInt(localStorage.mise) + 20; // on mise 20
+    localStorage.budget = parseInt(localStorage.budget) - 20; // Budget -= mise du joueur
     localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB); // Pot = Mise joueur+Bot
     console.log('mise ' + localStorage.mise);// Test ordre d'appel
     console.log('Budget ' + localStorage.budget); // Test ordre d'appel
@@ -513,14 +568,13 @@ function addmise() {
     document.getElementById("actionAffich").innerHTML = 'Action : Mise 20€'; //action effectué
 
     affichage(); // refresh l'affichage des stats
-    // }
+
 }
 
 // Mise 40
 function misedouble() {
-    // if (partiecommence !== 0) {
-    localStorage.mise = parseInt(localStorage.pot) + 20; // On mise 40
-    localStorage.budget = parseInt(localStorage.budget) - parseInt(localStorage.mise); //Budget -= miseJ
+    localStorage.mise = parseInt(localStorage.mise) + 40; // On mise 40
+    localStorage.budget = parseInt(localStorage.budget) - 40; //Budget -= miseJ
     localStorage.pot = parseInt(localStorage.mise) + parseInt(localStorage.miseB); //Pot = MiseJ+B
     console.log('mise ' + localStorage.mise); //TEST
     console.log('Budget ' + localStorage.budget); //TEST
@@ -531,90 +585,19 @@ function misedouble() {
     eval();
     document.getElementById("actionAffich").innerHTML = 'Action : Mise 40€'; //action effectué
     affichage(); //refresh stats display
-    // }
 }
 
 // Passer le tour
 function passer() {
-    //localStorage.mise = 0; //On joue pas
     document.getElementById('actionAffich').innerHTML = 'Action : Couché'; //action effectué
     console.log("perdu"); //Test
     btnoff();
     eval();
     ordiPlay(Deck.jeuDeck, Deck.jeuJ2, victoire);
     eval();
-    //END GAME ICI et reboot
     affichage();
 }
 
-
-
-//TEST récup depuis page index
-console.log(localStorage.getItem("pseudo"));
-console.log(localStorage.getItem("budget"));
-
-//}
-
-function finPartie (){
-    console.log(localStorage.pot);
-    console.log(localStorage.budget);
-    if (victoire === 'joueur'){
-        localStorage.budget = parseInt(localStorage.budget) + parseInt(localStorage.pot);
-        mess_result = 'Bravo vous emporter le pot: ' + localStorage.pot + '!' ;
-    }
-
-    if (victoire === 'egal'){
-        localStorage.budget = parseInt(localStorage.budget) + parseInt(localStorage.mise);
-        // voir pour mettre un budget à l'ordi
-        mess_result = "Egalité, vous récupérez votre mise";
-
-
-    }
-
-    if (victoire === 'ordi'){
-        //voir pour mettre un budget à l'ordi
-        localStorage.budget = parseInt(localStorage.budget) - parseInt(localStorage.pot);
-        mess_result = 'Vous perdez! l\'Ordi remporte le pot: ' + localStorage.pot + '!' ;
-
-    }
-
-
-    localStorage.pot = 0;
-   // localStorage.mise = 0;
-
-    affichage ();
-
-    // --------------------------init des variables
-        cartechange = [];
-        Deck.jeuDeck = [],
-        Deck.jeuJ1 = [],
-        Deck.jeuJ2 = [],
-
-        partie.style.visibility = "visible";
-
-    // -------------------------gestion de l'affiche de fin de manche
-    let centre = document.getElementById("affpot");
-    let messinit = centre.firstChild;
-
-
-        let mess = document.createElement("H1");
-        let mess_content = document.createTextNode(mess_result);
-        mess.append(mess_content);
-
-        centre.replaceChild(mess, messinit);
-
-    // -------------------------gestion de la fin de partie
-    if (parseInt(localStorage.budget) <= 0) {
-        alert('You lose');
-        window.location = 'index.html';
-    }
-    if (parseInt(localStorage.budget) >= 2 * budgetInit ){
-        alert('You win');
-        window.location = 'index.html';
-
-    }
-
-}
 
 
 
